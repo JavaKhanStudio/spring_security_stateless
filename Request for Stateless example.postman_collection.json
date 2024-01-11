@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "190e6220-65d8-4c36-8193-7b61c1dcd3ed",
+		"name": "Request for Stateless example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7216865"
+	},
+	"item": [
+		{
+			"name": "SecurityCheck Copy",
+			"item": [
+				{
+					"name": "CheckCurrentRights",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{connectionPath}}/test/security",
+							"host": [
+								"{{connectionPath}}"
+							],
+							"path": [
+								"test",
+								"security"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Connections",
+			"item": [
+				{
+					"name": "Wrong connection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"wrong\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{connectionPath}}/api/login",
+							"host": [
+								"{{connectionPath}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Connection as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.environment.set(\"userToken\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin1\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{connectionPath}}/api/login",
+							"host": [
+								"{{connectionPath}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test Admin Route",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{connectionPath}}/api/admin/users/Test",
+					"host": [
+						"{{connectionPath}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"users",
+						"Test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Open Route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{connectionPath}}/test",
+					"host": [
+						"{{connectionPath}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
