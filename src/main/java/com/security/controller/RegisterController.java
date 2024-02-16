@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("connectionAPI/register")
 public class RegisterController {
 
     private final UserService userService;
@@ -20,9 +20,9 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
-        userService.registerNewUserAccount(user);
+        userService.registerNewUserAccount(user, false, true);
         return ResponseEntity.ok("User registered successfully");
     }
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>Welcome Home</h1>
+<p>Your token is: <span th:text="${token}"></span></p>
+<form method="get" th:action="@{/logMeOut}">
+    <button class="btn btn-logout" type="submit">Logout</button>
+</form>
+<button th:onclick="'window.location.href=\'' + @{/page/user} + '\''">Go to User page</button>
+<button th:onclick="'window.location.href=\'' + @{/page/admin} + '\''">Go to Admin Page</button>
+
+</body>
+</html>

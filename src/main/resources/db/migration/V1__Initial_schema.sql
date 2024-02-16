@@ -5,8 +5,9 @@ primary key (id)) engine=InnoDB;
 
 create table IF NOT exists users (
     id INT not null auto_increment,
-    username varchar(100),
-    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    o_auth_provider VARCHAR(100),
+    password VARCHAR(100),
     enabled boolean,
 primary key (id)) engine=InnoDB;
 
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT exists users_roles (
 
 # Le nom des roles doit commencer par ROLE_ en spring security
 INSERT INTO roles (name) VALUES
-('ROLE_ADMIN'),
 ('ROLE_USER'),
+('ROLE_ADMIN'),
 ('ROLE_TESTER')
 ;

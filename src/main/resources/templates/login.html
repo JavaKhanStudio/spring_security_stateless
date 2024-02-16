@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <title>Login</title>
+</head>
+<body>
+<h2>Login</h2>
+<div>
+    <form method="post" th:action="@{/page/login}" th:object="${loginDTO}">
+        <div>
+            <label for="username">Username:</label>
+            <input autofocus id="username" name="username" required th:field="*{username}" type="text">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" name="password" required th:field="*{password}" type="password">
+        </div>
+        <div th:if="${loginError}" th:text="${loginError}"></div>
+        <div>
+            <button type="submit">Sign In</button>
+        </div>
+    </form>
+</div>
+
+<h3>Or</h3>
+
+<div>
+    <!-- OAuth2 Login -->
+    <a href="/oauth2/authorization/google">Login with Google</a>
+</div>
+</body>
+</html>

@@ -13,12 +13,13 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
-    private String username;
+    private String email;
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private boolean enabled;
 
@@ -28,5 +29,7 @@ public class User {
     private LocalDateTime tokenExpiration;
 
     private String claimToken;
+
+    private String oAuthProvider;
 
 }

@@ -11,13 +11,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RestController
+@Controller
+@RequestMapping("connectionAPI/login")
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
@@ -30,8 +33,8 @@ public class LoginController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PostMapping("/api/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDto) {
+    @PostMapping("")
+    public @ResponseBody ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDto) {
         try {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
             Authentication authentication = authenticationManager.authenticate(authToken);
@@ -48,10 +51,9 @@ public class LoginController {
 
             return ResponseEntity.ok(new AuthResponseDTO(token, userName));
         } catch (AuthenticationException e) {
-
-
             return ResponseEntity.badRequest().body("Invalid username or password");
         }
     }
+
 
 }
