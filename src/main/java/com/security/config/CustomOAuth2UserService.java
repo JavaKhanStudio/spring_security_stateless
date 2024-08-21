@@ -4,6 +4,7 @@ import com.security.entity.Role;
 import com.security.entity.User;
 import com.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,8 +19,10 @@ import java.util.HashSet;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    @Autowired
-    private UserService userService;
+    @Bean
+    public UserService userService() {
+        return new UserService() ;
+    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -34,7 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // Je vais utilisé cette information pour voir si mon user est déja en base
         // Je vais créer ce user s'il n'existe pas
-        User user = userService.findByEmail(email);
+        User user = userService().findByEmail(email);
         HashSet<SimpleGrantedAuthority> authorities = new HashSet<>();
         if (user == null) {
             // Creation d'un
@@ -43,7 +46,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             user.setEnabled(true);
             user.setOAuthProvider(providerName); // D'ou viens mon Oauth, dans ce cas google
 
-            userService.registerNewUserAccount(user, true, true);
+            userService().registerNewUserAccount(user, true, true);
             // Define the user's authorities/roles
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         } else {

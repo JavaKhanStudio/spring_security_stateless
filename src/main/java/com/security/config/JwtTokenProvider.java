@@ -37,12 +37,16 @@ public class JwtTokenProvider {
 
     private String extractUsernameWithEmail(Authentication authentication) {
         if (authentication.getPrincipal() instanceof UserDetails) {
-            return ((UserDetails) authentication.getPrincipal()).getUsername();
+            String details = ((UserDetails) authentication.getPrincipal()).getUsername() ;
+            System.out.println("If details " + details);
+            return details;
         } else if (authentication.getPrincipal() instanceof DefaultOAuth2User) {
             DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
-            return oAuth2User.getAttribute("email"); // Assuming 'email' is used as the username. Adjust if necessary.
+            String details = oAuth2User.getAttribute("email") ;
+            System.out.println("Else details " + details);
+            return details;
         }
-        return null; // Handle this case as appropriate.
+        return null;
     }
 
     private List<String> findRoles(Authentication authentication) {

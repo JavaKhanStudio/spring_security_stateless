@@ -16,7 +16,7 @@ public class AdminUserController {
         this.userService = userService;
     }
 
-    @GetMapping("/test")
+    @GetMapping("")
     public ResponseEntity<?> test() {
         return ResponseEntity.ok().body("This is ok, you can get in");
     }

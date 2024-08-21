@@ -45,7 +45,7 @@ public class LoginController {
             User user = userService.getUser(loginDto.getUsername());
 
             List<String> roles = userService.getUserRoles(user);
-
+            System.out.println("Role list for user " + roles);
             // Create security token for user
             String token = jwtTokenProvider.generateToken(userName, roles);
 

@@ -12,6 +12,16 @@
 				{
 					"name": "CheckCurrentRights",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -74,11 +84,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin1\",\r\n    \"password\" : \"password\"\r\n}",
+							"raw": "{\r\n    \"username\": \"admin1@test.com\",\r\n    \"password\" : \"password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -86,13 +106,64 @@
 							}
 						},
 						"url": {
-							"raw": "{{connectionPath}}/api/login",
+							"raw": "{{connectionPath}}/connectionAPI/login",
 							"host": [
 								"{{connectionPath}}"
 							],
 							"path": [
-								"api",
+								"connectionAPI",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get page Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin1@test.com\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{connectionPath}}/page/admin",
+							"host": [
+								"{{connectionPath}}"
+							],
+							"path": [
+								"page",
+								"admin"
 							]
 						}
 					},
@@ -117,7 +188,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin1\",\r\n    \"password\" : \"password\"\r\n}",
+							"raw": "{\r\n    \"username\": \"student1@test.com\",\r\n    \"password\" : \"password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,12 +196,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{connectionPath}}/api/login",
+							"raw": "{{connectionPath}}/connectionAPI/login",
 							"host": [
 								"{{connectionPath}}"
 							],
 							"path": [
-								"api",
+								"connectionAPI",
 								"login"
 							]
 						}
@@ -155,15 +226,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{connectionPath}}/api/admin/users/Test",
+					"raw": "{{connectionPath}}/admin/users",
 					"host": [
 						"{{connectionPath}}"
 					],
 					"path": [
-						"api",
 						"admin",
-						"users",
-						"Test"
+						"users"
 					]
 				}
 			},
@@ -171,6 +240,23 @@
 		},
 		{
 			"name": "Test Open Route",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{connectionPath}}/test",
+					"host": [
+						"{{connectionPath}}"
+					],
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
 			"request": {
 				"method": "GET",
 				"header": [],

@@ -24,8 +24,6 @@ import java.util.List;
 public class SecurityConfiguration {
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private CustomOAuth2UserService customOAuth2UserService;
     // Injection du cors allowed origins. Cela rend mon application plus flexible,
     // Car les cors ne seront pas les mêmes en fonction de l'environnement
@@ -82,11 +80,11 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Application de la config CORS
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // Ajout du filtre JWT, permettant de vérifier le token et le rôle de l'utilisateur
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/admin/**", "/page/admin", "/page/admin/**").hasRole("ADMIN") // Accès admin
-                        .requestMatchers("/user/**", "/page/user", "/page/user/**").hasRole("USER") // Accès étudiant
-                        .requestMatchers("/tester/**").hasRole("TESTER") // Accès enseignant
+                        .requestMatchers("/admin/**", "/page/admin", "/page/admin/**", "/api/admin/users/test").hasRole("ADMIN") // Accès admin
+                        .requestMatchers("/user/**", "/page/user", "/page/user/**").hasRole("USER")
+                        .requestMatchers("/tester/**").hasRole("TESTER")
                         // Accès public a certaines routes, notamment la page d'accueil, l'inscription et le login
-                        .requestMatchers("/", "/index", "/test", "/test/*",
+                        .requestMatchers("/", "/index",
                                 "/connectionAPI/register", "/connectionAPI/login", "/connectionAPI/login/page", "/logMeOut",
                                 "/page/login/show", "/page/login", "/login").permitAll()
                 )
